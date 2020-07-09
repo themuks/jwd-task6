@@ -8,14 +8,14 @@ public class Book {
     private String title;
     private List<String> genres;
     private int pageCount;
-    private String authorName;
+    private List<String> authors;
 
-    public Book(int id, String title, List<String> genres, int pageCount, String authorName) {
+    public Book(int id, String title, List<String> genres, int pageCount, List<String> authors) {
         this.id = id;
         this.title = title;
         this.genres = genres;
         this.pageCount = pageCount;
-        this.authorName = authorName;
+        this.authors = authors;
     }
 
     public int getId() {
@@ -50,12 +50,16 @@ public class Book {
         this.pageCount = pageCount;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getAuthor(int index) {
+        return authors.get(index);
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor(String author, int index) {
+        this.authors.set(index, author);
+    }
+
+    public int getAuthorsCount() {
+        return authors.size();
     }
 
     public int getGenresCount() {
@@ -75,7 +79,7 @@ public class Book {
                 pageCount == book.pageCount &&
                 title.equals(book.title) &&
                 genres.equals(book.genres) &&
-                authorName.equals(book.authorName);
+                authors.equals(book.authors);
     }
 
     @Override
@@ -84,7 +88,7 @@ public class Book {
         result = 31 * result + title.hashCode();
         result = 31 * result + genres.hashCode();
         result = 31 * result + pageCount;
-        result = 31 * result + authorName.hashCode();
+        result = 31 * result + authors.hashCode();
         return result;
     }
 
@@ -95,7 +99,7 @@ public class Book {
         sb.append(", title='").append(title).append('\'');
         sb.append(", genres=").append(genres);
         sb.append(", pageCount=").append(pageCount);
-        sb.append(", authorName='").append(authorName).append('\'');
+        sb.append(", authors=").append(authors);
         sb.append('}');
         return sb.toString();
     }
