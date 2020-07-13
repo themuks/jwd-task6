@@ -1,7 +1,7 @@
-package com.kuntsevich.task6.factory;
+package com.kuntsevich.task6.model.dao.factory;
 
-import com.kuntsevich.task6.dao.BookListDao;
-import com.kuntsevich.task6.dao.impl.WarehouseBookListDaoImpl;
+import com.kuntsevich.task6.model.dao.BookListDao;
+import com.kuntsevich.task6.model.dao.impl.WarehouseBookListDaoImpl;
 
 public class DaoFactory {
 
@@ -9,7 +9,8 @@ public class DaoFactory {
 
     private final BookListDao warehouseBookListDao = new WarehouseBookListDaoImpl();
 
-    private DaoFactory() {}
+    private DaoFactory() {
+    }
 
     public static DaoFactory getInstance() {
         if (instance == null) {

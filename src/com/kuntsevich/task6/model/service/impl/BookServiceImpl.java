@@ -1,25 +1,53 @@
-package com.kuntsevich.task6.service;
+package com.kuntsevich.task6.model.service.impl;
 
-import com.kuntsevich.task6.dao.BookListDao;
+import com.kuntsevich.task6.creator.BookCreator;
+import com.kuntsevich.task6.model.dao.BookListDao;
 import com.kuntsevich.task6.entity.Book;
+import com.kuntsevich.task6.exception.BookCreationException;
 import com.kuntsevich.task6.exception.BookNotFoundException;
-import com.kuntsevich.task6.factory.DaoFactory;
+import com.kuntsevich.task6.model.dao.factory.DaoFactory;
+import com.kuntsevich.task6.model.service.BookService;
+import com.kuntsevich.task6.validator.NumberValidator;
 
 import java.util.List;
 import java.util.Optional;
 
-public class BookService {
+public class BookServiceImpl implements BookService {
 
-    public boolean addBook(Book book) {
+    public boolean addBook(String title, String genres, String pageCount, String authors) throws BookCreationException {
+        NumberValidator numberValidator = new NumberValidator();
+        if (!numberValidator.validateNumberString(pageCount)) {
+            throw new BookCreationException("Invalid page count string value");
+        }
+        int pageCountValue = Integer.parseInt(pageCount);
+        List<String> genresList = splitWords(genres);
+        List<String> authorsList = splitWords(authors);
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
+        BookCreator bookCreator = new BookCreator();
+        Book book = bookCreator.createBook(title, genresList, pageCountValue, authorsList);
         return bookListDao.addBook(book);
     }
 
-    public void removeBook(Book book) throws BookNotFoundException {
+    public void removeBook(String title, String genres, String pageCount, String authors) throws BookNotFoundException, BookCreationException {
+        NumberValidator numberValidator = new NumberValidator();
+        if (!numberValidator.validateNumberString(pageCount)) {
+            throw new BookCreationException("Invalid page count string value");
+        }
+        int pageCountValue = Integer.parseInt(pageCount);
+        List<String> genresList = splitWords(genres);
+        List<String> authorsList = splitWords(authors);
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
+        BookCreator bookCreator = new BookCreator();
+        Book book = bookCreator.createBook(title, genresList, pageCountValue, authorsList);
         bookListDao.removeBook(book);
+    }
+
+    @Override
+    public Optional<Book> findById(String id) {
+        // TODO Realize method
+        return Optional.empty();
     }
 
     public Optional<Book> findById(int id) {
@@ -38,6 +66,12 @@ public class BookService {
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
         return bookListDao.findByGenres(genres);
+    }
+
+    @Override
+    public List<Book> findByPageCount(String pageCount) {
+        // TODO Realize method
+        return null;
     }
 
     public List<Book> findByPageCount(int pageCount) {
@@ -80,5 +114,10 @@ public class BookService {
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
         return bookListDao.sortByAuthors();
+    }
+
+    private List<String> splitWords(String text) {
+        String[] words = text.split("//s+");
+        return List.of(words);
     }
 }

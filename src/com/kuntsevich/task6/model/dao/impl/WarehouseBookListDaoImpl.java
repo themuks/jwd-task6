@@ -1,6 +1,6 @@
-package com.kuntsevich.task6.dao.impl;
+package com.kuntsevich.task6.model.dao.impl;
 
-import com.kuntsevich.task6.dao.BookListDao;
+import com.kuntsevich.task6.model.dao.BookListDao;
 import com.kuntsevich.task6.entity.Book;
 import com.kuntsevich.task6.entity.BookWarehouse;
 import com.kuntsevich.task6.exception.BookNotFoundException;
