@@ -2,33 +2,34 @@ package com.kuntsevich.task6.model.dao;
 
 import com.kuntsevich.task6.entity.Book;
 import com.kuntsevich.task6.exception.BookNotFoundException;
+import com.kuntsevich.task6.exception.DaoException;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BookListDao {
 
-    boolean addBook(Book book);
+    boolean addBook(Book book) throws DaoException;
 
-    void removeBook(Book book) throws BookNotFoundException;
+    void removeBook(Book book) throws DaoException;
 
-    Optional<Book> findById(int id);
+    Book findById(int id) throws DaoException;
 
-    List<Book> findByTitle(String title);
+    List<Book> findByTitle(String title) throws DaoException;
 
-    List<Book> findByGenres(List<String> genres);
+    List<Book> findByGenres(List<String> genres) throws DaoException;
 
-    List<Book> findByPageCount(int pageCount);
+    List<Book> findByPageCount(int pageCount) throws DaoException;
 
-    List<Book> findByAuthors(List<String> authors);
+    List<Book> findByAuthors(List<String> authors) throws DaoException;
 
-    List<Book> sortById();
+    List<Book> sortById() throws DaoException;
 
-    List<Book> sortByTitle();
+    List<Book> sortByTitle() throws DaoException;
 
-    List<Book> sortByGenres();
+    List<Book> sortByGenres() throws DaoException;
 
-    List<Book> sortByPageCount();
+    List<Book> sortByPageCount() throws DaoException;
 
-    List<Book> sortByAuthors();
+    List<Book> sortByAuthors() throws DaoException;
 }

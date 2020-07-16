@@ -11,10 +11,10 @@ public class BookCreator {
 
     public Book createBook(String title, List<String> genres, int pageCount, List<String> authors) throws BookCreationException {
         BookValidator bookValidator = new BookValidator();
-        if (!bookValidator.validateTitle(title)
-                || !bookValidator.validateGenres(genres)
-                || !bookValidator.validatePageCount(pageCount)
-                || !bookValidator.validateAuthors(authors)) {
+        if (!bookValidator.isTitleValid(title)
+                || !bookValidator.isGenresValid(genres)
+                || !bookValidator.isPageCountValid(pageCount)
+                || !bookValidator.isAuthorsValid(authors)) {
             throw new BookCreationException("Some of parameters are incorrect");
         }
         int id = BookIdGenerator.getInstance().generateId();

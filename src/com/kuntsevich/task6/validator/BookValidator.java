@@ -15,18 +15,18 @@ public class BookValidator {
     public static final int MIN_PAGE_COUNT_VALUE = 40;
     public static final int MAX_PAGE_COUNT_VALUE = 10000;
 
-    public boolean validateId(int id) {
+    public boolean isIdValid(int id) {
         return MIN_ID_VALUE <= id && id <= MAX_ID_VALUE;
     }
 
-    public boolean validateTitle(String title) {
+    public boolean isTitleValid(String title) {
         if (title == null) {
             return false;
         }
         return MIN_TITLE_NAME_SIZE <= title.length() && title.length() <= MAX_TITLE_NAME_SIZE;
     }
 
-    public boolean validateGenres(List<String> genres) {
+    public boolean isGenresValid(List<String> genres) {
         if (genres == null) {
             return false;
         }
@@ -38,11 +38,11 @@ public class BookValidator {
         return true;
     }
 
-    public boolean validatePageCount(int pageCount) {
+    public boolean isPageCountValid(int pageCount) {
         return MIN_PAGE_COUNT_VALUE <= pageCount && pageCount <= MAX_PAGE_COUNT_VALUE;
     }
 
-    public boolean validateAuthors(List<String> authors) {
+    public boolean isAuthorsValid(List<String> authors) {
         if (authors == null) {
             return false;
         }

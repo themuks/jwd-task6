@@ -23,4 +23,8 @@ public class BookIdGenerator {
     public int generateId() {
         return currentId++;
     }
+
+    public static void setCurrentId(int currentId) {
+        BookIdGenerator.currentId = currentId;
+    }
 }

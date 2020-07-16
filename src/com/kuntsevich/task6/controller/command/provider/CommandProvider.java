@@ -10,7 +10,12 @@ public class CommandProvider {
         if (action == null || action.isBlank()) {
             return new EmptyCommandImpl();
         }
-        CommandType currentType = CommandType.valueOf(action.toUpperCase());
+        CommandType currentType;
+        try {
+            currentType = CommandType.valueOf(action.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return new EmptyCommandImpl();
+        }
         Command current = currentType.getCommand();
         return current;
     }

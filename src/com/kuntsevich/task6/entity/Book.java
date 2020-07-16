@@ -4,26 +4,26 @@ import java.util.List;
 
 public class Book {
 
-    private int id;
+    private int bookId;
     private String title;
     private List<String> genres;
     private int pageCount;
     private List<String> authors;
 
-    public Book(int id, String title, List<String> genres, int pageCount, List<String> authors) {
-        this.id = id;
+    public Book(int bookId, String title, List<String> genres, int pageCount, List<String> authors) {
+        this.bookId = bookId;
         this.title = title;
         this.genres = genres;
         this.pageCount = pageCount;
         this.authors = authors;
     }
 
-    public int getId() {
-        return id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getTitle() {
@@ -75,7 +75,7 @@ public class Book {
             return false;
         }
         Book book = (Book) o;
-        return id == book.id &&
+        return bookId == book.bookId &&
                 pageCount == book.pageCount &&
                 title.equals(book.title) &&
                 genres.equals(book.genres) &&
@@ -84,7 +84,7 @@ public class Book {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = bookId;
         result = 31 * result + title.hashCode();
         result = 31 * result + genres.hashCode();
         result = 31 * result + pageCount;
@@ -95,7 +95,7 @@ public class Book {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Book{");
-        sb.append("id=").append(id);
+        sb.append("bookId=").append(bookId);
         sb.append(", title='").append(title).append('\'');
         sb.append(", genres=").append(genres);
         sb.append(", pageCount=").append(pageCount);

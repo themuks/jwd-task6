@@ -1,13 +1,12 @@
 package com.kuntsevich.task6.model.dao.impl;
 
-import com.kuntsevich.task6.model.dao.BookListDao;
 import com.kuntsevich.task6.entity.Book;
 import com.kuntsevich.task6.entity.BookWarehouse;
-import com.kuntsevich.task6.exception.BookNotFoundException;
+import com.kuntsevich.task6.exception.DaoException;
+import com.kuntsevich.task6.model.dao.BookListDao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class WarehouseBookListDaoImpl implements BookListDao {
 
@@ -17,27 +16,30 @@ public class WarehouseBookListDaoImpl implements BookListDao {
     }
 
     @Override
-    public void removeBook(Book book) throws BookNotFoundException {
+    public void removeBook(Book book) throws DaoException {
         boolean result = BookWarehouse.getInstance().remove(book);
         if (!result) {
-            throw new BookNotFoundException();
+            throw new DaoException("Book not found");
         }
     }
 
     @Override
-    public Optional<Book> findById(int id) {
+    public Book findById(int id) throws DaoException {
         List<Book> books = getBooks();
         Book result = null;
         for (var book : books) {
-            if (book.getId() == id) {
-                return Optional.of(result);
+            if (book.getBookId() == id) {
+                result = book;
             }
         }
-        return Optional.of(result);
+        if (result == null) {
+            throw new DaoException("Book with id not found");
+        }
+        return result;
     }
 
     @Override
-    public List<Book> findByTitle(String title) {
+    public List<Book> findByTitle(String title) throws DaoException {
         List<Book> result = new ArrayList<>();
         List<Book> books = getBooks();
         for (var book : books) {
@@ -45,11 +47,14 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                 result.add(book);
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> findByGenres(List<String> genres) {
+    public List<Book> findByGenres(List<String> genres) throws DaoException {
         List<Book> result = new ArrayList<>();
         List<Book> books = getBooks();
         for (var book : books) {
@@ -57,11 +62,14 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                 result.add(book);
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> findByPageCount(int pageCount) {
+    public List<Book> findByPageCount(int pageCount) throws DaoException {
         List<Book> result = new ArrayList<>();
         List<Book> books = getBooks();
         for (var book : books) {
@@ -69,11 +77,14 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                 result.add(book);
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> findByAuthors(List<String> authors) {
+    public List<Book> findByAuthors(List<String> authors) throws DaoException {
         List<Book> result = new ArrayList<>();
         List<Book> books = getBooks();
         for (var book : books) {
@@ -81,28 +92,34 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                 result.add(book);
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> sortById() {
+    public List<Book> sortById() throws DaoException {
         List<Book> books = getBooks();
         List<Book> result = new ArrayList<>(books);
         int length = result.size();
         for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - i - 1; j++) {
-                if (result.get(j).getId() > result.get(j + 1).getId()) {
+                if (result.get(j).getBookId() > result.get(j + 1).getBookId()) {
                     Book temp = result.get(j);
                     result.set(j, result.get(j + 1));
                     result.set(j + 1, temp);
                 }
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> sortByTitle() {
+    public List<Book> sortByTitle() throws DaoException {
         List<Book> books = getBooks();
         List<Book> result = new ArrayList<>(books);
         int length = result.size();
@@ -117,11 +134,14 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                 }
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> sortByGenres() {
+    public List<Book> sortByGenres() throws DaoException {
         List<Book> books = getBooks();
         List<Book> result = new ArrayList<>(books);
         int length = result.size();
@@ -150,11 +170,14 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                 }
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> sortByPageCount() {
+    public List<Book> sortByPageCount() throws DaoException {
         List<Book> books = getBooks();
         List<Book> result = new ArrayList<>(books);
         int length = result.size();
@@ -167,11 +190,14 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                 }
             }
         }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
+        }
         return result;
     }
 
     @Override
-    public List<Book> sortByAuthors() {
+    public List<Book> sortByAuthors() throws DaoException {
         List<Book> books = getBooks();
         List<Book> result = new ArrayList<>(books);
         int length = result.size();
@@ -199,6 +225,9 @@ public class WarehouseBookListDaoImpl implements BookListDao {
                     result.set(j + 1, temp);
                 }
             }
+        }
+        if (result.isEmpty()) {
+            throw new DaoException("Books not found");
         }
         return result;
     }

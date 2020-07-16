@@ -1,35 +1,33 @@
 package com.kuntsevich.task6.model.service;
 
 import com.kuntsevich.task6.entity.Book;
-import com.kuntsevich.task6.exception.BookCreationException;
-import com.kuntsevich.task6.exception.BookNotFoundException;
+import com.kuntsevich.task6.exception.ServiceException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BookService {
 
-    public boolean addBook(String title, String genres, String pageCount, String authors) throws BookCreationException;
+    boolean addBook(String title, String genres, String pageCount, String authors) throws ServiceException;
 
-    public void removeBook(String title, String genres, String pageCount, String authors) throws BookNotFoundException, BookCreationException;
+    void removeBook(String title, String genres, String pageCount, String authors) throws ServiceException;
 
-    public Optional<Book> findById(String id);
+    Book findById(String id) throws ServiceException;
 
-    public List<Book> findByTitle(String title);
+    List<Book> findByTitle(String title) throws ServiceException;
 
-    public List<Book> findByGenres(List<String> genres);
+    List<Book> findByGenres(List<String> genres) throws ServiceException;
 
-    public List<Book> findByPageCount(String pageCount);
+    List<Book> findByPageCount(String pageCount) throws ServiceException;
 
-    public List<Book> findByAuthors(List<String> authors);
+    List<Book> findByAuthors(List<String> authors) throws ServiceException;
 
-    public List<Book> sortById();
+    List<Book> sortById() throws ServiceException;
 
-    public List<Book> sortByTitle();
+    List<Book> sortByTitle() throws ServiceException;
 
-    public List<Book> sortByGenres();
+    List<Book> sortByGenres() throws ServiceException;
 
-    public List<Book> sortByPageCount();
+    List<Book> sortByPageCount() throws ServiceException;
 
-    public List<Book> sortByAuthors();
+    List<Book> sortByAuthors() throws ServiceException;
 }
