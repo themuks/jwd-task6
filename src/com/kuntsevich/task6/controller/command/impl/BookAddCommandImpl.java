@@ -24,14 +24,11 @@ public class BookAddCommandImpl implements Command {
         String pageCount = params.get(PARAM_NAME_PAGE_COUNT);
         String authors = params.get(PARAM_NAME_AUTHORS);
         try {
-            if (BookServiceImpl.getInstance().addBook(title, genres, pageCount, authors)) {
-                response = new Response(false, new ArrayList<>());
-                return response;
-            }
+            BookServiceImpl.getInstance().addBook(title, genres, pageCount, authors);
+            response = new Response(false, new ArrayList<>());
         } catch (ServiceException e) {
-            throw new CommandException("Can't create Book object");
+            response = new Response(true, new ArrayList<>());
         }
-        response = new Response(true, new ArrayList<>());
         return response;
     }
 }

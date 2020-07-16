@@ -11,8 +11,10 @@ import java.util.List;
 public class WarehouseBookListDaoImpl implements BookListDao {
 
     @Override
-    public boolean addBook(Book book) {
-        return BookWarehouse.getInstance().add(book);
+    public void addBook(Book book) throws DaoException {
+        if (!BookWarehouse.getInstance().add(book)) {
+            throw new DaoException("Can't add book");
+        }
     }
 
     @Override

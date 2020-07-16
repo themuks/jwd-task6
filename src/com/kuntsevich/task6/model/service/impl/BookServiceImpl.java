@@ -31,7 +31,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean addBook(String title, String genres, String pageCount, String authors) throws ServiceException {
+    public void addBook(String title, String genres, String pageCount, String authors) throws ServiceException {
         NumberValidator numberValidator = new NumberValidator();
         if (!numberValidator.isNumberStringValid(pageCount)) {
             throw new ServiceException("Invalid page count string value");
@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
             throw new ServiceException("Can't create book");
         }
         try {
-            return bookListDao.addBook(book);
+            bookListDao.addBook(book);
         } catch (DaoException e) {
             throw new ServiceException("Can't add book");
         }

@@ -7,8 +7,6 @@ import com.kuntsevich.task6.entity.Response;
 import com.kuntsevich.task6.exception.CommandException;
 import com.kuntsevich.task6.exception.ControllerException;
 
-import java.util.ArrayList;
-
 public class Controller {
 
     public Response executeTask(Request request) throws ControllerException {
@@ -19,9 +17,6 @@ public class Controller {
             result = command.execute(params);
         } catch (CommandException e) {
             throw new ControllerException("Command execution error");
-        }
-        if (result == null) {
-            result = new Response(true, new ArrayList<>());
         }
         return result;
     }

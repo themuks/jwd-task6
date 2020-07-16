@@ -24,7 +24,7 @@ public class BookWarehouse {
     }
 
     public boolean add(Book book) {
-        if (books.contains(book)) {
+        if (book == null || books.contains(book)) {
             return false;
         }
         books.add(book);
@@ -45,5 +45,9 @@ public class BookWarehouse {
 
     public int getBooksCount() {
         return books.size();
+    }
+
+    public void clear() {
+        books.clear();
     }
 }

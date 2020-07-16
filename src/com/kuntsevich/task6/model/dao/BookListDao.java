@@ -1,15 +1,13 @@
 package com.kuntsevich.task6.model.dao;
 
 import com.kuntsevich.task6.entity.Book;
-import com.kuntsevich.task6.exception.BookNotFoundException;
 import com.kuntsevich.task6.exception.DaoException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BookListDao {
 
-    boolean addBook(Book book) throws DaoException;
+    void addBook(Book book) throws DaoException;
 
     void removeBook(Book book) throws DaoException;
 
