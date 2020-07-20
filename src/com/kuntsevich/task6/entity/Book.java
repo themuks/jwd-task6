@@ -6,14 +6,14 @@ public class Book {
 
     private int bookId;
     private String title;
-    private List<String> genres;
+    private String genre;
     private int pageCount;
     private List<String> authors;
 
-    public Book(int bookId, String title, List<String> genres, int pageCount, List<String> authors) {
+    public Book(int bookId, String title, String genre, int pageCount, List<String> authors) {
         this.bookId = bookId;
         this.title = title;
-        this.genres = genres;
+        this.genre = genre;
         this.pageCount = pageCount;
         this.authors = authors;
     }
@@ -34,12 +34,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getGenre(int index) {
-        return genres.get(index);
+    public String getGenre() {
+        return genre;
     }
 
-    public void setGenre(int index, String genre) {
-        this.genres.set(index, genre);
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public int getPageCount() {
@@ -62,10 +62,6 @@ public class Book {
         return authors.size();
     }
 
-    public int getGenresCount() {
-        return genres.size();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -78,7 +74,7 @@ public class Book {
         return bookId == book.bookId &&
                 pageCount == book.pageCount &&
                 title.equals(book.title) &&
-                genres.equals(book.genres) &&
+                genre.equals(book.genre) &&
                 authors.equals(book.authors);
     }
 
@@ -86,7 +82,7 @@ public class Book {
     public int hashCode() {
         int result = bookId;
         result = 31 * result + title.hashCode();
-        result = 31 * result + genres.hashCode();
+        result = 31 * result + genre.hashCode();
         result = 31 * result + pageCount;
         result = 31 * result + authors.hashCode();
         return result;
@@ -97,7 +93,7 @@ public class Book {
         StringBuilder sb = new StringBuilder("Book{");
         sb.append("bookId=").append(bookId);
         sb.append(", title='").append(title).append('\'');
-        sb.append(", genres=").append(genres);
+        sb.append(", genre='").append(genre).append('\'');
         sb.append(", pageCount=").append(pageCount);
         sb.append(", authors=").append(authors);
         sb.append('}');

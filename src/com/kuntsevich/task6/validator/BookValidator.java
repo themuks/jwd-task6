@@ -26,16 +26,11 @@ public class BookValidator {
         return MIN_TITLE_NAME_SIZE <= title.length() && title.length() <= MAX_TITLE_NAME_SIZE;
     }
 
-    public boolean isGenresValid(List<String> genres) {
-        if (genres == null) {
+    public boolean isGenreValid(String genre) {
+        if (genre == null) {
             return false;
         }
-        for (var genre : genres) {
-            if (MIN_GENRE_NAME_LENGTH > genre.length() || genre.length() > MAX_GENRE_NAME_LENGTH) {
-                return false;
-            }
-        }
-        return true;
+        return MIN_GENRE_NAME_LENGTH <= genre.length() && genre.length() <= MAX_GENRE_NAME_LENGTH;
     }
 
     public boolean isPageCountValid(int pageCount) {

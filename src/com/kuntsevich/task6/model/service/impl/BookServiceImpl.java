@@ -31,52 +31,59 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void addBook(String title, String genres, String pageCount, String authors) throws ServiceException {
+    public void addBook(String title, String genre, String pageCount, String authors) throws ServiceException {
+        if (title == null || genre == null || pageCount == null || authors == null) {
+            throw new ServiceException("Some of parameters are null");
+        }
         NumberValidator numberValidator = new NumberValidator();
         if (!numberValidator.isNumberStringValid(pageCount)) {
             throw new ServiceException("Invalid page count string value");
         }
         int pageCountValue = Integer.parseInt(pageCount);
-        List<String> genresList = splitWords(genres);
         List<String> authorsList = splitWords(authors);
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
         BookCreator bookCreator = new BookCreator();
-        Book book = null;
+        Book book;
         try {
-            book = bookCreator.createBook(title, genresList, pageCountValue, authorsList);
+            book = bookCreator.createBook(title, genre, pageCountValue, authorsList);
         } catch (BookCreationException e) {
-            throw new ServiceException("Can't create book");
+            throw new ServiceException("Can't create book", e);
         }
+        System.out.println(book);
         try {
             bookListDao.addBook(book);
         } catch (DaoException e) {
-            throw new ServiceException("Can't add book");
+            throw new ServiceException("Can't add book", e);
         }
     }
 
     @Override
-    public void removeBook(String title, String genres, String pageCount, String authors) throws ServiceException {
+    public void removeBook(String id, String title, String genre, String pageCount, String authors) throws ServiceException {
+        if (title == null || genre == null || pageCount == null || authors == null) {
+            throw new ServiceException("Some of parameters are null");
+        }
         NumberValidator numberValidator = new NumberValidator();
-        if (!numberValidator.isNumberStringValid(pageCount)) {
-            throw new ServiceException("Invalid page count string value");
+        if (!numberValidator.isNumberStringValid(pageCount) || !numberValidator.isNumberStringValid(id)) {
+            throw new ServiceException("Invalid param string value");
         }
         int pageCountValue = Integer.parseInt(pageCount);
-        List<String> genresList = splitWords(genres);
+        int idValue = Integer.parseInt(id);
         List<String> authorsList = splitWords(authors);
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
         BookCreator bookCreator = new BookCreator();
-        Book book = null;
+        Book book;
         try {
-            book = bookCreator.createBook(title, genresList, pageCountValue, authorsList);
+            book = bookCreator.createBook(title, genre, pageCountValue, authorsList);
         } catch (BookCreationException e) {
-            throw new ServiceException("Can't create book");
+            throw new ServiceException("Can't create book", e);
         }
+        book.setBookId(idValue);
         try {
             bookListDao.removeBook(book);
         } catch (DaoException e) {
-            throw new ServiceException("Can't remove book");
+            throw new ServiceException("Can't remove book", e);
         }
     }
 
@@ -92,29 +99,35 @@ public class BookServiceImpl implements BookService {
         try {
             return bookListDao.findById(intId);
         } catch (DaoException e) {
-            throw new ServiceException("Book not found");
+            throw new ServiceException("Book not found", e);
         }
     }
 
     @Override
     public List<Book> findByTitle(String title) throws ServiceException {
+        if (title == null) {
+            throw new ServiceException("Title is null");
+        }
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
         try {
             return bookListDao.findByTitle(title);
         } catch (DaoException e) {
-            throw new ServiceException("Books not found");
+            throw new ServiceException("Books not found", e);
         }
     }
 
     @Override
-    public List<Book> findByGenres(List<String> genres) throws ServiceException {
+    public List<Book> findByGenre(String genre) throws ServiceException {
+        if (genre == null) {
+            throw new ServiceException("Title is null");
+        }
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
         try {
-            return bookListDao.findByGenres(genres);
+            return bookListDao.findByGenre(genre);
         } catch (DaoException e) {
-            throw new ServiceException("Books not found");
+            throw new ServiceException("Books not found", e);
         }
     }
 
@@ -130,74 +143,59 @@ public class BookServiceImpl implements BookService {
         try {
             return bookListDao.findByPageCount(intPageCount);
         } catch (DaoException e) {
-            throw new ServiceException("Books not found");
+            throw new ServiceException("Books not found", e);
         }
     }
 
     @Override
-    public List<Book> findByAuthors(List<String> authors) throws ServiceException {
+    public List<Book> findByAuthors(String authors) throws ServiceException {
+        if (authors == null) {
+            throw new ServiceException("Authors is null");
+        }
+        List<String> authorsList = splitWords(authors);
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
         try {
-            return bookListDao.findByAuthors(authors);
+            return bookListDao.findByAuthors(authorsList);
         } catch (DaoException e) {
-            throw new ServiceException("Books not found");
+            throw new ServiceException("Books not found", e);
         }
     }
 
     @Override
-    public List<Book> sortById() throws ServiceException {
+    public List<Book> sortById() {
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
-        try {
-            return bookListDao.sortById();
-        } catch (DaoException e) {
-            throw new ServiceException("Books not found");
-        }
+        return bookListDao.sortById();
     }
 
     @Override
-    public List<Book> sortByTitle() throws ServiceException {
+    public List<Book> sortByTitle() {
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
-        try {
-            return bookListDao.sortByTitle();
-        } catch (DaoException e) {
-            throw new ServiceException("Books not found");
-        }
+        return bookListDao.sortByTitle();
     }
 
     @Override
-    public List<Book> sortByGenres() throws ServiceException {
+    public List<Book> sortByGenre() {
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
-        try {
-            return bookListDao.sortByGenres();
-        } catch (DaoException e) {
-            throw new ServiceException("Books not found");
-        }
+        return bookListDao.sortByGenre();
     }
 
     @Override
-    public List<Book> sortByPageCount() throws ServiceException {
+    public List<Book> sortByPageCount() {
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
-        try {
-            return bookListDao.sortByPageCount();
-        } catch (DaoException e) {
-            throw new ServiceException("Books not found");
-        }
+        return bookListDao.sortByPageCount();
     }
 
     @Override
-    public List<Book> sortByAuthors() throws ServiceException {
+    public List<Book> sortByAuthors() {
         DaoFactory daoFactory = DaoFactory.getInstance();
         BookListDao bookListDao = daoFactory.getBookListDao();
-        try {
-            return bookListDao.sortByAuthors();
-        } catch (DaoException e) {
-            throw new ServiceException("Books not found");
-        }
+        return bookListDao.sortByAuthors();
+
     }
 
     private List<String> splitWords(String text) {

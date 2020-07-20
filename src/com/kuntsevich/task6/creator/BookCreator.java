@@ -9,15 +9,15 @@ import java.util.List;
 
 public class BookCreator {
 
-    public Book createBook(String title, List<String> genres, int pageCount, List<String> authors) throws BookCreationException {
+    public Book createBook(String title, String genre, int pageCount, List<String> authors) throws BookCreationException {
         BookValidator bookValidator = new BookValidator();
         if (!bookValidator.isTitleValid(title)
-                || !bookValidator.isGenresValid(genres)
+                || !bookValidator.isGenreValid(genre)
                 || !bookValidator.isPageCountValid(pageCount)
                 || !bookValidator.isAuthorsValid(authors)) {
             throw new BookCreationException("Some of parameters are incorrect");
         }
         int id = BookIdGenerator.getInstance().generateId();
-        return new Book(id, title, genres, pageCount, authors);
+        return new Book(id, title, genre, pageCount, authors);
     }
 }

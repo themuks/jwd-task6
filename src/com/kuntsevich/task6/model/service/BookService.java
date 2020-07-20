@@ -7,27 +7,27 @@ import java.util.List;
 
 public interface BookService {
 
-    void addBook(String title, String genres, String pageCount, String authors) throws ServiceException;
+    void addBook(String title, String genre, String pageCount, String authors) throws ServiceException;
 
-    void removeBook(String title, String genres, String pageCount, String authors) throws ServiceException;
+    void removeBook(String id, String title, String genre, String pageCount, String authors) throws ServiceException;
 
     Book findById(String id) throws ServiceException;
 
     List<Book> findByTitle(String title) throws ServiceException;
 
-    List<Book> findByGenres(List<String> genres) throws ServiceException;
+    List<Book> findByGenre(String genre) throws ServiceException;
 
     List<Book> findByPageCount(String pageCount) throws ServiceException;
 
-    List<Book> findByAuthors(List<String> authors) throws ServiceException;
+    List<Book> findByAuthors(String authors) throws ServiceException;
 
-    List<Book> sortById() throws ServiceException;
+    List<Book> sortById();
 
-    List<Book> sortByTitle() throws ServiceException;
+    List<Book> sortByTitle();
 
-    List<Book> sortByGenres() throws ServiceException;
+    List<Book> sortByGenre();
 
-    List<Book> sortByPageCount() throws ServiceException;
+    List<Book> sortByPageCount();
 
-    List<Book> sortByAuthors() throws ServiceException;
+    List<Book> sortByAuthors();
 }

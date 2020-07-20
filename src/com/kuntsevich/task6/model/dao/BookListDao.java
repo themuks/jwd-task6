@@ -15,19 +15,19 @@ public interface BookListDao {
 
     List<Book> findByTitle(String title) throws DaoException;
 
-    List<Book> findByGenres(List<String> genres) throws DaoException;
+    List<Book> findByGenre(String genre) throws DaoException;
 
     List<Book> findByPageCount(int pageCount) throws DaoException;
 
     List<Book> findByAuthors(List<String> authors) throws DaoException;
 
-    List<Book> sortById() throws DaoException;
+    List<Book> sortById();
 
-    List<Book> sortByTitle() throws DaoException;
+    List<Book> sortByTitle();
 
-    List<Book> sortByGenres() throws DaoException;
+    List<Book> sortByGenre();
 
-    List<Book> sortByPageCount() throws DaoException;
+    List<Book> sortByPageCount();
 
-    List<Book> sortByAuthors() throws DaoException;
+    List<Book> sortByAuthors();
 }
